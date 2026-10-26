@@ -4,11 +4,12 @@
 # Проверить конфиг: driftwm --check-config
 # Узнать app_id окна для правил: driftwm msg state
 
+# nm-applet, kwallet, kdeconnect и автозапуск из ~/.config/autostart driftwm-session
+# запускает сам (XDG autostart), поэтому здесь их нет
 autostart = [
     "waybar -c ~/.config/waybar/drift.jsonc",
     "mako",
     "systemctl --user start hyprpolkitagent",
-    "nm-applet --indicator",
     "wl-paste --type text --watch cliphist store",
     "wl-paste --type image --watch cliphist store",
 ]
