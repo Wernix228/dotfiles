@@ -25,3 +25,22 @@ Hyprland (Lua-конфиг, 0.56+) · Waybar · Fuzzel · Mako · Kitty · Catpp
 | Print / Shift + Print | скриншот области в буфер / в файл |
 | Alt + Shift | раскладка us/ru |
 | 3 пальца влево/вправо | рабочие столы |
+
+## driftwm (третья сессия, «поиграться»)
+Установка: `paru -S driftwm`, затем `stow driftwm`. Проверка конфига: `driftwm --check-config`.
+Waybar для него — `waybar/.config/waybar/drift.jsonc` (taskbar вместо рабочих столов).
+
+| Клавиши / жесты | Действие |
+|---|---|
+| Super + Enter / D | терминал / лаунчер |
+| Super + B / E | Firefox / Dolphin |
+| Super + Q | закрыть окно |
+| Super + стрелки | фокус на соседнее окно |
+| Super + Ctrl + стрелки | двигать холст |
+| Super + = / − / 0 / W | приблизить / отдалить / сброс / всё в кадре |
+| Super + 1..4, Super + Shift + 1..4 | закладки на холсте: перейти / сохранить |
+| Super + V | история буфера обмена |
+| Super + L | заблокировать |
+| Super + Ctrl + Shift + Q | выйти из driftwm |
+| Alt + Shift | раскладка us/ru |
+| 3 пальца | двигать холст; щипок — зум |

@@ -1,0 +1,100 @@
+// Waybar для driftwm: вместо hyprland/* — wlr/taskbar (клик по окну двигает холст к нему)
+{
+    "layer": "top",
+    "position": "top",
+    "height": 34,
+    "margin-top": 6,
+    "margin-left": 12,
+    "margin-right": 12,
+    "spacing": 6,
+
+    "modules-left": ["custom/launcher", "wlr/taskbar"],
+    "modules-center": ["clock"],
+    "modules-right": ["tray", "pulseaudio", "backlight", "network", "cpu", "memory", "battery", "custom/power"],
+
+    "custom/launcher": {
+        "format": "󰣇",
+        "on-click": "fuzzel",
+        "tooltip": false
+    },
+
+
+
+    "wlr/taskbar": {
+        "format": "{icon}",
+        "icon-size": 18,
+        "tooltip-format": "{title}",
+        "on-click": "activate",
+        "on-click-middle": "close"
+    },
+
+    "clock": {
+        "format": "󰥔 {:%H:%M}",
+        "format-alt": "󰃭 {:%A, %d %B}",
+        "locale": "ru_RU.UTF-8",
+        "tooltip-format": "<tt><small>{calendar}</small></tt>",
+        "calendar": {
+            "mode": "month",
+            "format": {
+                "months": "<span color='#cba6f7'><b>{}</b></span>",
+                "today": "<span color='#f38ba8'><b><u>{}</u></b></span>",
+                "weekdays": "<span color='#89b4fa'><b>{}</b></span>"
+            }
+        }
+    },
+
+    "tray": {
+        "icon-size": 16,
+        "spacing": 8
+    },
+
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-muted": "󰝟",
+        "format-icons": { "default": ["󰕿", "󰖀", "󰕾"] },
+        "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+        "on-click-right": "pavucontrol",
+        "scroll-step": 5
+    },
+
+    "backlight": {
+        "format": "{icon} {percent}%",
+        "format-icons": ["󰃞", "󰃟", "󰃠"],
+        "on-scroll-up": "brightnessctl set 5%+",
+        "on-scroll-down": "brightnessctl set 5%-"
+    },
+
+    "network": {
+        "format-wifi": "󰤨 {signalStrength}%",
+        "format-ethernet": "󰈀",
+        "format-disconnected": "󰤭",
+        "tooltip-format-wifi": "{essid} — {ipaddr}",
+        "on-click": "nm-connection-editor"
+    },
+
+    "cpu": {
+        "format": "󰻠 {usage}%",
+        "interval": 3
+    },
+
+    "memory": {
+        "format": "󰍛 {percentage}%",
+        "interval": 5,
+        "tooltip-format": "{used:0.1f} / {total:0.1f} ГБ"
+    },
+
+    "battery": {
+        "states": { "warning": 25, "critical": 12 },
+        "format": "{icon} {capacity}%",
+        "format-charging": "󰂄 {capacity}%",
+        "format-plugged": "󰚥 {capacity}%",
+        "format-icons": ["󰁺", "󰁼", "󰁾", "󰂀", "󰁹"],
+        "tooltip-format": "{timeTo}"
+    },
+
+    "custom/power": {
+        "format": "⏻",
+        "tooltip": false,
+        "on-click": "printf '󰌾  Заблокировать\n󰍃  Выйти\n󰤄  Сон\n󰜉  Перезагрузка\n󰐥  Выключение' | fuzzel --dmenu --prompt '' --lines 5 --width 22 | awk '{print $2}' | { read a; case \"$a\" in Заблокировать) hyprlock;; Выйти) loginctl terminate-session $XDG_SESSION_ID;; Сон) systemctl suspend;; Перезагрузка) systemctl reboot;; Выключение) systemctl poweroff;; esac; }"
+    }
+}

@@ -1,0 +1,73 @@
+# driftwm — бесконечный холст, Catppuccin Mocha.
+# Здесь только то, что отличается от дефолтов. Все опции:
+#   https://github.com/malbiruk/driftwm/blob/main/config.reference.toml
+# Проверить конфиг: driftwm --check-config
+# Узнать app_id окна для правил: driftwm msg state
+
+autostart = [
+    "waybar -c ~/.config/waybar/drift.jsonc",
+    "mako",
+    "systemctl --user start hyprpolkitagent",
+    "nm-applet --indicator",
+    "wl-paste --type text --watch cliphist store",
+    "wl-paste --type image --watch cliphist store",
+]
+
+[env]
+# Только для этой сессии — Plasma и Hyprland их не видят
+TERMINAL = "kitty"
+LAUNCHER = "fuzzel"
+QT_QPA_PLATFORMTHEME = "kde"
+XCURSOR_SIZE = "24"
+
+[input.keyboard]
+layout = "us,ru"
+# grp:alt_shift_toggle в driftwm ломает бинды с alt+shift, поэтому раскладка — tap-биндом ниже
+
+[input.trackpad]
+tap_to_click = true
+natural_scroll = true
+
+[decorations]
+bg_color = "#1e1e2e"
+fg_color = "#cdd6f4"
+corner_radius = 10
+default_mode = "minimal"
+border_width = 2
+border_color = "#45475a"
+border_color_focused = "#cba6f7"
+
+[background]
+type = "wallpaper"
+path = "~/dotfiles/wallpapers/catppuccin-mocha.png"
+
+[keybindings]
+"alt+shift" = "switch-layout next"
+"mod+e" = "exec dolphin"
+"mod+b" = "exec firefox"
+"mod+v" = "spawn cliphist list | fuzzel --dmenu | cliphist decode | wl-copy"
+"mod+l" = "spawn hyprlock"
+"print" = "spawn grim -g \"$(slurp)\" - | wl-copy"
+"shift+print" = "spawn mkdir -p ~/Pictures/Screenshots && grim -g \"$(slurp)\" ~/Pictures/Screenshots/$(date +%F_%H-%M-%S).png"
+"XF86AudioRaiseVolume" = "spawn wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
+"XF86AudioLowerVolume" = "spawn wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+"XF86AudioMute" = "spawn wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+"XF86MonBrightnessUp" = "spawn brightnessctl -e4 -n2 set 5%+"
+"XF86MonBrightnessDown" = "spawn brightnessctl -e4 -n2 set 5%-"
+
+# Игры: открываются в фуллскрине, все клавиши уходят в игру (кроме Ctrl+Alt+F*)
+[[window_rules]]
+app_id = "steam_app_*"
+fullscreen = true
+pass_keys = true
+
+[[window_rules]]
+app_id = "gamescope"
+fullscreen = true
+pass_keys = true
+
+# Тень и скругление для Waybar (панели и так не двигаются вместе с холстом)
+[[window_rules]]
+app_id = "waybar"
+shadow = true
+corner_radius = 12
