@@ -76,7 +76,7 @@ Waybar для него — `waybar/.config/waybar/drift.jsonc` (taskbar вмес
 
 ## Экран блокировки (qylock)
 Темы — github.com/Darkkal44/qylock (клон в `~/Git/qylock`, обёртка в `~/.local/share/quickshell-lockscreen`).
-Тема — `~/.config/qylock/theme` (сейчас `minecraft`), сменить: записать туда имя папки из `~/Git/qylock/themes`.
+Тема — `~/.config/qylock/theme`: имя папки из `~/Git/qylock/themes` или `random` (сейчас) — случайная при каждой блокировке, кроме тем из `~/.config/qylock/exclude`. У osu/osumania включён `gameMode=menu` (без ритм-игры для разблокировки). Превью всех тем: `~/Pictures/qylock-themes.png`.
 Super+L (Hyprland и driftwm) и hypridle вызывают `~/.local/bin/lockscreen` (пакет `lockscreen`): раскладка → us, затем qylock → блокировка Noctalia → hyprlock.
 Если экран блокировки завис: Ctrl+Alt+F3, войти и выполнить
 `pkill -x quickshell; hyprctl --instance 0 dispatch 'hl.dsp.exec_cmd("hyprlock")'`, затем вернуться в Hyprland.

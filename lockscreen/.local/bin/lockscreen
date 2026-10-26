@@ -14,8 +14,21 @@ elif [ "$XDG_CURRENT_DESKTOP" = driftwm ]; then
     driftwm msg action switch-layout 0 >/dev/null 2>&1
 fi
 
+# Тема: имя папки из ~/Git/qylock/themes или "random" — случайная при каждой блокировке
+# (кроме перечисленных в ~/.config/qylock/exclude, по одной на строку)
+pick_theme() {
+    theme=$(cat "$HOME/.config/qylock/theme" 2>/dev/null || echo minecraft)
+    [ "$theme" = random ] || { echo "$theme"; return; }
+    themes="$HOME/.local/share/quickshell-lockscreen/themes_link"
+    exclude="$HOME/.config/qylock/exclude"; [ -f "$exclude" ] || exclude=/dev/null
+    find -L "$themes" -mindepth 2 -maxdepth 3 -name Main.qml -printf '%h\n' \
+        | sed "s|^$themes/||" \
+        | grep -vxF -f "$exclude" \
+        | shuf -n 1
+}
+
 if [ -x "$QYLOCK" ] && command -v quickshell >/dev/null; then
-    setsid -f "$QYLOCK" "$(cat "$HOME/.config/qylock/theme" 2>/dev/null || echo minecraft)" >/dev/null 2>&1
+    setsid -f "$QYLOCK" "$(pick_theme)" >/dev/null 2>&1
 elif pidof -q noctalia; then
     noctalia msg session lock
 else
