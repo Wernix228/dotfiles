@@ -10,7 +10,15 @@ source  = "builtin"
 builtin = "Catppuccin"
 
 [wallpaper]
-directory = "~/dotfiles/wallpapers"
+# Коллекции Catppuccin Mocha (git clone в ~/Pictures/Wallpapers, обновить: git -C <папка> pull)
+directory = "~/Pictures/Wallpapers"
+
+# Автосмена обоев — выключена; включить: enabled = true (или в настройках, Super + ,)
+[wallpaper.automation]
+enabled          = false
+interval_seconds = 1800
+order            = "random"
+recursive        = true
 
 [wallpaper.default]
 path = "~/dotfiles/wallpapers/catppuccin-mocha.png"
