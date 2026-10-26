@@ -2,7 +2,7 @@
 
 Hyprland (Lua-конфиг, 0.56+) · Noctalia · Waybar · Fuzzel · Mako · Kitty · Catppuccin Mocha
 
-Установка: `cd ~/dotfiles && stow hypr noctalia waybar fuzzel mako kitty`
+Установка: `cd ~/dotfiles && stow hypr noctalia waybar fuzzel mako kitty fish starship fastfetch btop cava qt6ct`
 
 В Hyprland оболочка — **Noctalia** (`paru -S noctalia-git`). Если её нет, Hyprland сам
 запускает запасной набор Waybar + Mako + hyprpaper, бинды переключаются на fuzzel/cliphist/hyprlock.
@@ -53,3 +53,12 @@ Waybar для него — `waybar/.config/waybar/drift.jsonc` (taskbar вмес
 | Super + Ctrl + Shift + Q | выйти из driftwm |
 | Alt + Shift | раскладка us/ru |
 | 3 пальца | двигать холст; щипок — зум |
+
+## Оформление
+- **Шаблоны Noctalia** (`noctalia/.config/noctalia/templates.toml`): kitty, btop, cava, GTK3/4, Qt
+  перекрашиваются под палитру Noctalia. Применить заново: `noctalia msg templates-apply`.
+  Сгенерированные темы в git не попадают (см. `.gitignore`).
+- **Qt в Hyprland** — qt6ct (`QT_QPA_PLATFORMTHEME=qt6ct` только в Hyprland), иконки Papirus-Dark.
+- **Курсор** — Catppuccin Mocha Mauve (`~/.local/share/icons`, релиз github.com/catppuccin/cursors).
+- **Терминал** — fish (конфиг CachyOS) + Starship (`catppuccin-powerline`) + fastfetch.
+- Firefox: локальный шаблон только на ноуте (`~/.config/noctalia/local-firefox.toml`), в dotfiles его нет.

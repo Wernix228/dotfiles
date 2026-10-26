@@ -1,0 +1,34 @@
+// fastfetch — Catppuccin Mocha. Запуск: fastfetch (также выводится при открытии терминала)
+{
+    "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+    "logo": {
+        "source": "cachyos_small",
+        "color": { "1": "#cba6f7", "2": "#89b4fa" },
+        "padding": { "top": 1, "left": 2, "right": 3 }
+    },
+    "display": {
+        "separator": "  ",
+        "color": { "keys": "#cba6f7", "title": "#89b4fa" },
+        "key": { "width": 6 }
+    },
+    "modules": [
+        "break",
+        { "type": "title", "format": "{user-name-colored}{at-symbol-colored}{host-name-colored}" },
+        { "type": "custom", "format": "\u001b[38;2;69;71;90m╭───────────────────────────────────╮" },
+        { "type": "os",       "key": " 󰣇 ", "keyColor": "#cba6f7", "format": "{name}" },
+        { "type": "kernel",   "key": "  ", "keyColor": "#b4befe" },
+        { "type": "wm",       "key": "  ", "keyColor": "#89b4fa", "format": "{pretty-name}" },
+        { "type": "shell",    "key": "  ", "keyColor": "#74c7ec", "format": "{pretty-name}" },
+        { "type": "terminal", "key": "  ", "keyColor": "#94e2d5", "format": "{pretty-name}" },
+        { "type": "packages", "key": " 󰏖 ", "keyColor": "#a6e3a1", "format": "{all}" },
+        { "type": "uptime",   "key": " 󰅐 ", "keyColor": "#f9e2af" },
+        { "type": "custom", "format": "\u001b[38;2;69;71;90m├───────────────────────────────────┤" },
+        { "type": "cpu",      "key": "  ", "keyColor": "#fab387", "format": "{name} ({cores-logical})" },
+        { "type": "gpu",      "key": " 󰢮 ", "keyColor": "#eba0ac", "format": "{name}" },
+        { "type": "memory",   "key": "  ", "keyColor": "#f38ba8" },
+        { "type": "disk",     "key": " 󰋊 ", "keyColor": "#f5c2e7", "folders": "/" },
+        { "type": "battery",  "key": " 󰁹 ", "keyColor": "#f2cdcd" },
+        { "type": "custom", "format": "\u001b[38;2;69;71;90m╰───────────────────────────────────╯" },
+        { "type": "colors", "symbol": "circle", "paddingLeft": 2 }
+    ]
+}

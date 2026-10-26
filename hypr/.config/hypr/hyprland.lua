@@ -42,6 +42,8 @@ end
 hl.on("hyprland.start", function()
     -- Noctalia сама рисует панель, уведомления, обои, трей и историю буфера
     hl.exec_cmd("command -v noctalia >/dev/null && exec noctalia || { waybar & mako & hyprpaper & nm-applet --indicator & wl-paste --type text --watch cliphist store & wl-paste --type image --watch cliphist store & }")
+    -- GTK-программы: курсор и иконки. Plasma при входе выставляет свои значения обратно
+    hl.exec_cmd("gsettings set org.gnome.desktop.interface cursor-theme " .. cursor .. "; gsettings set org.gnome.desktop.interface cursor-size 24; gsettings set org.gnome.desktop.interface icon-theme " .. icons)
     hl.exec_cmd("hypridle")
     hl.exec_cmd("systemctl --user start hyprpolkitagent")
 end)
@@ -52,10 +54,14 @@ end)
 -------------------------------
 -- Задаются только для этой сессии, Plasma их не видит.
 
+local cursor = "catppuccin-mocha-mauve-cursors"   -- ~/.local/share/icons
+local icons  = "Papirus-Dark"
+hl.env("XCURSOR_THEME", cursor)
 hl.env("XCURSOR_SIZE", "24")
+hl.env("HYPRCURSOR_THEME", cursor)
 hl.env("HYPRCURSOR_SIZE", "24")
--- Qt-программы (Dolphin и др.) берут тему и иконки из настроек KDE
-hl.env("QT_QPA_PLATFORMTHEME", "kde")
+-- Qt-программы (Dolphin и др.): цвета Noctalia и иконки через qt6ct (~/.config/qt6ct)
+hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")
 hl.env("QT_QPA_PLATFORM", "wayland;xcb")
 hl.env("MOZ_ENABLE_WAYLAND", "1")
 

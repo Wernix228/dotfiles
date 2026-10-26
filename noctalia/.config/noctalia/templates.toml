@@ -1,0 +1,6 @@
+# Шаблоны Noctalia: перекрашивают программы под текущую палитру (тему или обои).
+# KColorScheme не включён — он перекрасил бы саму Plasma.
+# Firefox — отдельный локальный шаблон в ~/.config/noctalia/local-firefox.toml (не в dotfiles).
+[theme.templates]
+enable_builtin_templates = true
+builtin_ids = ["kitty", "btop", "cava", "gtk3", "gtk4", "qt"]
