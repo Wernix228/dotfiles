@@ -39,8 +39,12 @@ border_color = "#45475a"
 border_color_focused = "#cba6f7"
 
 [background]
-type = "wallpaper"
-path = "~/dotfiles/wallpapers/catppuccin-mocha.png"
+# Своё северное сияние в палитре Catppuccin (shaders/aurora.glsl), едет вместе с холстом.
+# Встроенные варианты: /usr/share/driftwm/wallpapers/{animated,static}/*.glsl
+type = "shader"
+path = "~/.config/driftwm/shaders/aurora.glsl"
+# Анимация фона не чаще 30 кадров/с — меньше нагрузка на встройку и батарею
+animate_fps = 30
 
 [keybindings]
 # exec-terminal смотрит $TERMINAL самого driftwm, а [env] выше действует только
