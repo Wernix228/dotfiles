@@ -1,0 +1,24 @@
+# Noctalia (v5) — оболочка для Hyprland: панель, лаунчер, центр управления,
+# уведомления, обои, экран блокировки. Здесь только отличия от дефолтов,
+# всё остальное удобнее менять в GUI (Super + ,) — оно сохраняется
+# в ~/.local/state/noctalia/settings.toml и перекрывает этот файл.
+# Все опции: https://github.com/noctalia-dev/noctalia/blob/main/example.toml
+
+[theme]
+mode    = "dark"
+source  = "builtin"
+builtin = "Catppuccin"
+
+[wallpaper]
+directory = "~/dotfiles/wallpapers"
+
+[wallpaper.default]
+path = "~/dotfiles/wallpapers/catppuccin-mocha.png"
+
+# Затемнение/блокировку/сон делает hypridle (общий с запасным режимом без Noctalia),
+# поэтому встроенный idle Noctalia выключен — это и так дефолт, оставлено для ясности.
+[idle.behavior.lock]
+enabled = false
+
+[idle.behavior.screen-off]
+enabled = false

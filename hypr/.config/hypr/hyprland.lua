@@ -27,20 +27,23 @@ local fileManager = "dolphin"
 local browser     = "firefox"
 local menu        = "fuzzel"
 
+-- Оболочка: Noctalia, если установлена; иначе Waybar + Mako + hyprpaper.
+-- Каждая команда ниже сначала пробует Noctalia, при её отсутствии — запасной вариант.
+local ipc = "noctalia msg "
+local function shell_or(noctalia_cmd, fallback)
+    return ipc .. noctalia_cmd .. " 2>/dev/null || " .. fallback
+end
+
 
 -------------------
 ---- АВТОЗАПУСК ---
 -------------------
 
 hl.on("hyprland.start", function()
-    hl.exec_cmd("waybar")
-    hl.exec_cmd("mako")
-    hl.exec_cmd("hyprpaper")
+    -- Noctalia сама рисует панель, уведомления, обои, трей и историю буфера
+    hl.exec_cmd("command -v noctalia >/dev/null && exec noctalia || { waybar & mako & hyprpaper & nm-applet --indicator & wl-paste --type text --watch cliphist store & wl-paste --type image --watch cliphist store & }")
     hl.exec_cmd("hypridle")
     hl.exec_cmd("systemctl --user start hyprpolkitagent")
-    hl.exec_cmd("nm-applet --indicator")
-    hl.exec_cmd("wl-paste --type text --watch cliphist store")
-    hl.exec_cmd("wl-paste --type image --watch cliphist store")
 end)
 
 
@@ -196,8 +199,13 @@ hl.bind("CTRL + ALT + T",        hl.dsp.exec_cmd(terminal))
 hl.bind(mod .. " + grave",       hl.dsp.exec_cmd("~/.config/hypr/scripts/dropterm.sh"))
 hl.bind(mod .. " + E",           hl.dsp.exec_cmd(fileManager))
 hl.bind(mod .. " + B",           hl.dsp.exec_cmd(browser))
-hl.bind(mod .. " + D",           hl.dsp.exec_cmd(menu))
-hl.bind(mod .. " + C",           hl.dsp.exec_cmd("cliphist list | fuzzel --dmenu --prompt '󰅌  ' | cliphist decode | wl-copy"))
+hl.bind(mod .. " + D",           hl.dsp.exec_cmd(shell_or("panel-toggle launcher", menu)))
+hl.bind(mod .. " + C",           hl.dsp.exec_cmd(shell_or("panel-toggle clipboard", "cliphist list | fuzzel --dmenu --prompt '󰅌  ' | cliphist decode | wl-copy")))
+-- Только с Noctalia: центр управления, настройки, обои, Alt+Tab
+hl.bind(mod .. " + A",           hl.dsp.exec_cmd(ipc .. "panel-toggle control-center"))
+hl.bind(mod .. " + comma",       hl.dsp.exec_cmd(ipc .. "settings-toggle"))
+hl.bind(mod .. " + W",           hl.dsp.exec_cmd(ipc .. "panel-toggle wallpaper"))
+hl.bind("ALT + Tab",             hl.dsp.exec_cmd(ipc .. "window-switcher hold"))
 
 -- Окна
 hl.bind(mod .. " + Q",           hl.dsp.window.close())
@@ -207,9 +215,10 @@ hl.bind(mod .. " + P",           hl.dsp.window.pseudo())
 hl.bind(mod .. " + J",           hl.dsp.layout("togglesplit"))
 
 -- Система
-hl.bind(mod .. " + L",           hl.dsp.exec_cmd("hyprlock"))
+hl.bind(mod .. " + L",           hl.dsp.exec_cmd(shell_or("session lock", "hyprlock")))
 hl.bind(mod .. " + SHIFT + E",   hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
-hl.bind(mod .. " + SHIFT + R",   hl.dsp.exec_cmd("pkill waybar; waybar"))
+-- Перезапустить панель (Noctalia или Waybar)
+hl.bind(mod .. " + SHIFT + R",   hl.dsp.exec_cmd("if command -v noctalia >/dev/null; then pkill -x noctalia; noctalia; else pkill waybar; waybar; fi"))
 
 -- Скриншоты: Print — область в буфер, Shift+Print — область в файл
 hl.bind("Print",                 hl.dsp.exec_cmd("grim -g \"$(slurp)\" - | wl-copy"))
@@ -308,6 +317,14 @@ hl.window_rule({
     move  = "monitor_w*0.1 50",
 })
 
+-- Окно настроек Noctalia — плавающее
+hl.window_rule({
+    name  = "noctalia-settings",
+    match = { class = "^dev.noctalia.Noctalia$" },
+    float = true,
+    size  = { 1080, 920 },
+})
+
 -- Типовые диалоги и мелкие утилиты — плавающими
 hl.window_rule({
     name  = "float-utils",
@@ -327,3 +344,23 @@ hl.window_rule({
     match = { class = ".*" },
     idle_inhibit = "fullscreen",
 })
+
+
+--------------------------
+---- NOCTALIA         ----
+--------------------------
+
+-- Блюр под панелью, панелями, доком и уведомлениями; свои анимации Hyprland для них выключены
+hl.layer_rule({
+    name  = "noctalia",
+    match = { namespace = "^noctalia-(bar-.+|notification|dock|panel|attached-panel|osd|window-switcher)$" },
+    no_anim      = true,
+    ignore_alpha = 0.5,
+    blur         = true,
+    blur_popups  = true,
+})
+
+-- Постоянные рабочие столы 1–5: виджет столов в Noctalia показывает и пустые
+for i = 1, 5 do
+    hl.workspace_rule({ workspace = tostring(i), persistent = true })
+end
