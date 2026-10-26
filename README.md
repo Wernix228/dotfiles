@@ -18,6 +18,7 @@ git clone https://github.com/Wernix228/dotfiles ~/dotfiles
 
 В Hyprland оболочка — **Noctalia**. Если её нет, Hyprland сам
 запускает запасной набор Waybar + Mako + hyprpaper, бинды переключаются на fuzzel/cliphist/hyprlock.
+
 ## Горячие клавиши
 | Клавиши | Действие |
 |---|---|
