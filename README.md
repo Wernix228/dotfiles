@@ -27,7 +27,7 @@ Hyprland (Lua-конфиг, 0.56+) · Noctalia · Waybar · Fuzzel · Mako · Ki
 | Super + , | настройки Noctalia |
 | Super + W | выбор обоев (Noctalia) |
 | Alt + Tab | переключатель окон (Noctalia) |
-| Super + L | заблокировать |
+| Super + L | заблокировать (qylock, тема Genshin) |
 | Super + Shift + E | выйти из Hyprland |
 | Super + Shift + R | перезапустить панель (Noctalia/Waybar) |
 | Print / Shift + Print | скриншот области в буфер / в файл |
@@ -49,7 +49,7 @@ Waybar для него — `waybar/.config/waybar/drift.jsonc` (taskbar вмес
 | Super + = / − / 0 / W | приблизить / отдалить / сброс / всё в кадре |
 | Super + 1..4, Super + Shift + 1..4 | закладки на холсте: перейти / сохранить |
 | Super + V | история буфера обмена |
-| Super + L | заблокировать |
+| Super + L | заблокировать (qylock, тема Genshin) |
 | Super + Ctrl + Shift + Q | выйти из driftwm |
 | Alt + Shift | раскладка us/ru |
 | 3 пальца | двигать холст; щипок — зум |
@@ -62,3 +62,10 @@ Waybar для него — `waybar/.config/waybar/drift.jsonc` (taskbar вмес
 - **Курсор** — Catppuccin Mocha Mauve (`~/.local/share/icons`, релиз github.com/catppuccin/cursors).
 - **Терминал** — fish (конфиг CachyOS) + Starship (`catppuccin-powerline`) + fastfetch.
 - Firefox: локальный шаблон только на ноуте (`~/.config/noctalia/local-firefox.toml`), в dotfiles его нет.
+
+## Экран блокировки (qylock)
+Темы — github.com/Darkkal44/qylock (клон в `~/Git/qylock`, обёртка в `~/.local/share/quickshell-lockscreen`).
+Тема — `~/.config/qylock/theme` (сейчас `Genshin`), сменить: записать туда имя папки из `~/Git/qylock/themes`.
+Super+L и hypridle вызывают `hypr/scripts/lock.sh`: qylock → блокировка Noctalia → hyprlock.
+Если экран блокировки завис: Ctrl+Alt+F3, войти и выполнить
+`pkill -x quickshell; hyprctl --instance 0 dispatch 'hl.dsp.exec_cmd("hyprlock")'`, затем вернуться в Hyprland.
