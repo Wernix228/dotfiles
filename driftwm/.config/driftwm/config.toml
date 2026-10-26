@@ -56,7 +56,9 @@ animate_fps = 30
 "mod+e" = "exec dolphin"
 "mod+b" = "exec firefox"
 "mod+v" = "spawn cliphist list | fuzzel --dmenu | cliphist decode | wl-copy"
-"mod+l" = "spawn hyprlock"
+# Перед блокировкой — английская раскладка: во время блокировки Alt+Shift не работает,
+# и с русской раскладкой пароль было не набрать
+"mod+l" = "spawn driftwm msg action switch-layout 0; hyprlock"
 "print" = "spawn grim -g \"$(slurp)\" - | wl-copy"
 "shift+print" = "spawn mkdir -p ~/Pictures/Screenshots && grim -g \"$(slurp)\" ~/Pictures/Screenshots/$(date +%F_%H-%M-%S).png"
 "XF86AudioRaiseVolume" = "spawn wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
