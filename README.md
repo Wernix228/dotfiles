@@ -1,13 +1,23 @@
 # dotfiles
 
-Hyprland (Lua-конфиг, 0.56+) · Noctalia · Waybar · Fuzzel · Mako · Kitty · Catppuccin Mocha
+Hyprland (Lua-конфиг, 0.56+) · Noctalia · driftwm · Waybar · Kitty · Catppuccin Mocha
+Система — CachyOS, KDE Plasma остаётся запасной сессией.
 
-Установка: `cd ~/dotfiles && stow hypr noctalia waybar fuzzel mako kitty fish starship fastfetch btop cava qt6ct`
+## Установка на чистую систему
+```sh
+git clone https://github.com/Wernix228/dotfiles ~/dotfiles
+~/dotfiles/install.sh               # пакеты, конфиги, курсор, спрайты, qylock
+~/dotfiles/install.sh --wallpapers  # то же + обои Catppuccin (~1,1 ГБ)
+~/dotfiles/install.sh --dry-run     # только показать шаги
+```
+Скрипт ставит пакеты (pacman + paru для `driftwm` и `noctalia-git`), раскладывает конфиги
+через GNU Stow (мешающие файлы — в `~/.dotfiles-backup/<дата>/`) и докачивает то, чего нет
+в репозитории. Повторный запуск безопасен. После — выйти из Plasma и выбрать Hyprland или driftwm.
 
-В Hyprland оболочка — **Noctalia** (`paru -S noctalia-git`). Если её нет, Hyprland сам
+Только stow, без скрипта: `cd ~/dotfiles && stow hypr noctalia waybar fuzzel mako kitty fish starship fastfetch btop cava qt6ct driftwm && stow --no-folding plasma`
+
+В Hyprland оболочка — **Noctalia**. Если её нет, Hyprland сам
 запускает запасной набор Waybar + Mako + hyprpaper, бинды переключаются на fuzzel/cliphist/hyprlock.
-Удалить ссылки: `stow -D <пакет>`
-
 ## Горячие клавиши
 | Клавиши | Действие |
 |---|---|
