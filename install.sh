@@ -72,8 +72,9 @@ run paru -S --needed "${AUR_PKGS[@]}"
 # ── Конфиги (GNU Stow) ────────────────────────────────────────────────────────
 
 STOW_PKGS=(hypr noctalia waybar fuzzel mako kitty fish starship fastfetch btop cava qt6ct driftwm)
-# Plasma: только скрипт в ~/.config/plasma-workspace/env, без захвата всей папки
-STOW_NOFOLD=(plasma)
+# Без захвата целых папок: plasma — только скрипт в ~/.config/plasma-workspace/env,
+# lockscreen — только ~/.local/bin/lockscreen (там же лежат другие программы)
+STOW_NOFOLD=(plasma lockscreen)
 BACKUP="$HOME/.dotfiles-backup/$(date +%F_%H-%M-%S)"
 
 # Файлы, которые мешают stow (например конфиг fish из /etc/skel), переносим в бэкап
@@ -130,10 +131,14 @@ else
     run bash "$DOTFILES/fastfetch/get-sprites.sh"
 fi
 
-step "Экран блокировки qylock (тема из ~/.config/qylock/theme, по умолчанию minecraft)"
+step "Экран блокировки qylock (тема из ~/.config/qylock/theme, по умолчанию random)"
 QYLOCK_SRC="$HOME/Git/qylock"
 QYLOCK_DST="$HOME/.local/share/quickshell-lockscreen"
+# osu/osumania: режим «только меню» (по умолчанию для разблокировки нужно пройти ритм-игру)
+OSU_CONFS=(themes/osu/theme.conf themes/osumania/theme.conf)
 if [ -d "$QYLOCK_SRC/.git" ]; then
+    # наши правки osu мешают pull — откатываем и после обновления ставим заново
+    run git -C "$QYLOCK_SRC" checkout -- "${OSU_CONFS[@]}"
     run git -C "$QYLOCK_SRC" pull -q --ff-only
 else
     run mkdir -p "$HOME/Git"
@@ -144,7 +149,13 @@ run rm -rf "$QYLOCK_DST"
 run cp -r "$QYLOCK_SRC/quickshell-lockscreen" "$QYLOCK_DST"
 run ln -sfn "$QYLOCK_SRC/themes" "$QYLOCK_DST/themes_link"
 run chmod +x "$QYLOCK_DST/lock.sh"
-[ -f "$HOME/.config/qylock/theme" ] || { run mkdir -p "$HOME/.config/qylock"; [ "$DRY" = 1 ] || echo minecraft > "$HOME/.config/qylock/theme"; }
+for conf in "${OSU_CONFS[@]}"; do
+    run sed -i 's/^gameMode=.*/gameMode=menu/' "$QYLOCK_SRC/$conf"
+done
+# Тема: random — случайная при каждой блокировке; исключения — ~/.config/qylock/exclude
+run mkdir -p "$HOME/.config/qylock"
+[ -f "$HOME/.config/qylock/theme" ] || [ "$DRY" = 1 ] || echo random > "$HOME/.config/qylock/theme"
+[ -f "$HOME/.config/qylock/exclude" ] || run touch "$HOME/.config/qylock/exclude"
 # Заглушка объекта keyboard из SDDM: без неё часть тем (Genshin) не находит пользователя
 if [ "$DRY" = 0 ] && ! grep -q 'property var keyboard' "$QYLOCK_DST/lock_shell.qml"; then
     python3 - "$QYLOCK_DST/lock_shell.qml" <<'EOF'
@@ -173,5 +184,5 @@ fi
 step "Готово"
 info "Выйдите из Plasma («Завершить сеанс») и на экране входа выберите Hyprland или driftwm."
 info "Plasma остаётся в списке как запасная сессия."
-[ -d "$BACKUP" ] && info "Мешавшие файлы перенесены в $BACKUP"
+if [ -d "$BACKUP" ]; then info "Мешавшие файлы перенесены в $BACKUP"; fi
 info "Шпаргалка по клавишам — $DOTFILES/README.md"
