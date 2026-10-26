@@ -8,7 +8,8 @@ Hyprland (Lua-конфиг, 0.56+) · Waybar · Fuzzel · Mako · Kitty · Catpp
 ## Горячие клавиши
 | Клавиши | Действие |
 |---|---|
-| Super + Enter | терминал (kitty) |
+| Super + Enter / Ctrl + Alt + T | терминал (kitty) |
+| Super + ` (Ё) | выпадающий терминал: показать / спрятать |
 | Super + D | лаунчер (fuzzel) |
 | Super + B / E | Firefox / Dolphin |
 | Super + Q | закрыть окно |
@@ -32,7 +33,8 @@ Waybar для него — `waybar/.config/waybar/drift.jsonc` (taskbar вмес
 
 | Клавиши / жесты | Действие |
 |---|---|
-| Super + Enter / D | терминал / лаунчер |
+| Super + Enter / Ctrl + Alt + T | терминал |
+| Super + D | лаунчер |
 | Super + B / E | Firefox / Dolphin |
 | Super + Q | закрыть окно |
 | Super + стрелки | фокус на соседнее окно |

@@ -43,6 +43,7 @@ type = "wallpaper"
 path = "~/dotfiles/wallpapers/catppuccin-mocha.png"
 
 [keybindings]
+"ctrl+alt+t" = "exec-terminal"
 "alt+shift" = "switch-layout next"
 "mod+e" = "exec dolphin"
 "mod+b" = "exec firefox"

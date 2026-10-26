@@ -191,6 +191,9 @@ local mod = "SUPER"
 
 -- Программы
 hl.bind(mod .. " + Return",      hl.dsp.exec_cmd(terminal))
+hl.bind("CTRL + ALT + T",        hl.dsp.exec_cmd(terminal))
+-- Выпадающий терминал (как в Quake/Yakuake): Super + ` (клавиша Ё) — показать/спрятать
+hl.bind(mod .. " + grave",       hl.dsp.exec_cmd("~/.config/hypr/scripts/dropterm.sh"))
 hl.bind(mod .. " + E",           hl.dsp.exec_cmd(fileManager))
 hl.bind(mod .. " + B",           hl.dsp.exec_cmd(browser))
 hl.bind(mod .. " + D",           hl.dsp.exec_cmd(menu))
@@ -293,6 +296,16 @@ hl.window_rule({
     name  = "steam-popups-float",
     match = { class = "^steam$", title = "negative:^Steam$" },
     float = true,
+})
+
+-- Выпадающий терминал живёт на скрытом столе special:term, сверху по центру
+hl.window_rule({
+    name  = "dropterm",
+    match = { class = "^dropterm$" },
+    workspace = "special:term silent",
+    float = true,
+    size  = "monitor_w*0.8 monitor_h*0.55",
+    move  = "monitor_w*0.1 50",
 })
 
 -- Типовые диалоги и мелкие утилиты — плавающими
