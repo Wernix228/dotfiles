@@ -95,6 +95,6 @@
     "custom/power": {
         "format": "⏻",
         "tooltip": false,
-        "on-click": "printf '󰌾  Заблокировать\n󰍃  Выйти\n󰤄  Сон\n󰜉  Перезагрузка\n󰐥  Выключение' | fuzzel --dmenu --prompt '' --lines 5 --width 22 | awk '{print $2}' | { read a; case \"$a\" in Заблокировать) hyprlock;; Выйти) loginctl terminate-session $XDG_SESSION_ID;; Сон) systemctl suspend;; Перезагрузка) systemctl reboot;; Выключение) systemctl poweroff;; esac; }"
+        "on-click": "printf '󰌾  Заблокировать\n󰍃  Выйти\n󰤄  Сон\n󰜉  Перезагрузка\n󰐥  Выключение' | fuzzel --dmenu --prompt '' --lines 5 --width 22 | awk '{print $2}' | { read a; case \"$a\" in Заблокировать) hyprlock;; Выйти) driftwm msg action quit;; Сон) systemctl suspend;; Перезагрузка) systemctl reboot;; Выключение) systemctl poweroff;; esac; }"
     }
 }
