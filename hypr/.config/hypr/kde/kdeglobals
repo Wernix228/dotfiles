@@ -1,0 +1,4 @@
+# Дополнительные KDE-настройки только для Hyprland (XDG_CONFIG_DIRS в hyprland.lua).
+# Работает для ключей, которых нет в ~/.config/kdeglobals: иконки здесь, цвета — в <app>rc рядом.
+[Icons]
+Theme=Papirus-Dark

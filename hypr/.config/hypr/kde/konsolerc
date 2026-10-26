@@ -1,0 +1,4 @@
+# Только в Hyprland: цветовая схема Noctalia (шаблон kde-colors). Выбор схемы в меню
+# программы запишется в ~/.config/konsolerc и перекроет это в обеих сессиях.
+[UiSettings]
+ColorScheme=noctalia

@@ -4,3 +4,9 @@
 [theme.templates]
 enable_builtin_templates = true
 builtin_ids = ["kitty", "btop", "cava", "gtk3", "gtk4", "qt"]
+
+# Цветовая схема KDE без применения к Plasma (встроенный kcolorscheme применяет её глобально).
+# Подхватывается KDE-программами только в Hyprland через hypr/kde/kdeglobals.
+[theme.templates.user.kde-colors]
+input_path  = "/usr/share/noctalia/assets/templates/kde/kcolorscheme.colors"
+output_path = "$XDG_DATA_HOME/color-schemes/noctalia.colors"

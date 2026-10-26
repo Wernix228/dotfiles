@@ -62,6 +62,9 @@ hl.env("HYPRCURSOR_THEME", cursor)
 hl.env("HYPRCURSOR_SIZE", "24")
 -- Qt-программы (Dolphin и др.): цвета Noctalia и иконки через qt6ct (~/.config/qt6ct)
 hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")
+-- KDE-программы (Dolphin и др.) берут цвета из своей схемы, а не из qt6ct: схема Noctalia
+-- задаётся в hypr/kde/<app>rc, которые Plasma не видит (её ~/.config их не переопределяет)
+hl.env("XDG_CONFIG_DIRS", os.getenv("HOME") .. "/.config/hypr/kde:/etc/xdg")
 hl.env("QT_QPA_PLATFORM", "wayland;xcb")
 hl.env("MOZ_ENABLE_WAYLAND", "1")
 
