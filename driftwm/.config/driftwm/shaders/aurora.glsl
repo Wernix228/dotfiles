@@ -7,6 +7,11 @@
 // сильнее. Звёзды экранного размера и не растут при зуме.
 precision highp float;
 
+// Яркость сияния: 1.0 — сочно, 0.5 — спокойный фон под окнами
+const float AURORA = 0.5;
+// Насыщенность поверх пастели Catppuccin: 0 — чистая пастель, 0.45 — «светится»
+const float VIVID = 0.2;
+
 varying vec2 v_coords;
 uniform vec2 size;
 uniform vec2 u_camera;
@@ -91,17 +96,17 @@ void main() {
     // Цвет ленты плывёт по палитре вдоль X; пастель Catppuccin чуть насыщеннее,
     // чтобы сияние «светилось», а не туманилось
     float hueShift = fbm(vec2(q.x * 0.6 - t, 0.5));
-    vec3 green = mix(GREEN, vec3(0.25, 0.95, 0.62), 0.45);
-    vec3 teal  = mix(TEAL, vec3(0.2, 0.9, 0.85), 0.35);
+    vec3 green = mix(GREEN, vec3(0.25, 0.95, 0.62), VIVID);
+    vec3 teal  = mix(TEAL, vec3(0.2, 0.9, 0.85), VIVID * 0.8);
     vec3 c1 = mix(green, teal, smoothstep(0.3, 0.7, hueShift));
     vec3 c2 = mix(teal, SKY, smoothstep(0.35, 0.75, hueShift));
     vec3 c3 = mix(green, teal, smoothstep(0.25, 0.65, hueShift));
 
-    col += c1 * b1 * 0.8 + c2 * b2 * 0.55 + c3 * b3 * 0.45;
+    col += (c1 * b1 * 0.8 + c2 * b2 * 0.55 + c3 * b3 * 0.45) * AURORA;
 
     // Сиреневая кайма над лентами — верхний край сияния
     float fringe = band(q, 0.30, 1.0, t) + band(q + vec2(2.3, 0.0), 0.18, 5.0, t * 1.3 + 4.0);
-    col += mix(MAUVE, BLUE, hueShift) * fringe * 0.14;
+    col += mix(MAUVE, BLUE, hueShift) * fringe * 0.14 * AURORA;
 
     // Лёгкая дымка у горизонта
     col += TEAL * fbm(q * 2.0 + t) * 0.025 * smoothstep(0.3, 1.0, v_coords.y);
