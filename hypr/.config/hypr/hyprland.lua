@@ -226,7 +226,7 @@ hl.bind(mod .. " + P",           hl.dsp.window.pseudo())
 hl.bind(mod .. " + J",           hl.dsp.layout("togglesplit"))
 
 -- Система
-hl.bind(mod .. " + L",           hl.dsp.exec_cmd("~/.config/hypr/scripts/lock.sh"))
+hl.bind(mod .. " + L",           hl.dsp.exec_cmd("~/.local/bin/lockscreen"))
 hl.bind(mod .. " + SHIFT + E",   hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 -- Перезапустить панель (Noctalia или Waybar)
 hl.bind(mod .. " + SHIFT + R",   hl.dsp.exec_cmd("if command -v noctalia >/dev/null; then pkill -x noctalia; noctalia; else pkill waybar; waybar; fi"))

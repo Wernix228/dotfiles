@@ -1,0 +1,23 @@
+#!/bin/sh
+# Экран блокировки для Hyprland и driftwm (Super+L, hypridle по таймеру и перед сном).
+# qylock с темой из ~/.config/qylock/theme → блокировка Noctalia → hyprlock.
+# В Plasma не используется: KWin не даёт сторонним программам блокировать экран.
+QYLOCK="$HOME/.local/share/quickshell-lockscreen/lock.sh"
+
+# уже заблокировано — второй экран блокировки не запускаем
+pidof -q quickshell hyprlock && exit 0
+
+# Английская раскладка: на экране блокировки её не переключить, а пароль латиницей
+if [ -n "$HYPRLAND_INSTANCE_SIGNATURE" ]; then
+    hyprctl switchxkblayout all 0 >/dev/null 2>&1
+elif [ "$XDG_CURRENT_DESKTOP" = driftwm ]; then
+    driftwm msg action switch-layout 0 >/dev/null 2>&1
+fi
+
+if [ -x "$QYLOCK" ] && command -v quickshell >/dev/null; then
+    setsid -f "$QYLOCK" "$(cat "$HOME/.config/qylock/theme" 2>/dev/null || echo minecraft)" >/dev/null 2>&1
+elif pidof -q noctalia; then
+    noctalia msg session lock
+else
+    setsid -f hyprlock
+fi

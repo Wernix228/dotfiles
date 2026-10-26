@@ -77,7 +77,7 @@ Waybar для него — `waybar/.config/waybar/drift.jsonc` (taskbar вмес
 ## Экран блокировки (qylock)
 Темы — github.com/Darkkal44/qylock (клон в `~/Git/qylock`, обёртка в `~/.local/share/quickshell-lockscreen`).
 Тема — `~/.config/qylock/theme` (сейчас `minecraft`), сменить: записать туда имя папки из `~/Git/qylock/themes`.
-Super+L и hypridle вызывают `hypr/scripts/lock.sh`: qylock → блокировка Noctalia → hyprlock.
+Super+L (Hyprland и driftwm) и hypridle вызывают `~/.local/bin/lockscreen` (пакет `lockscreen`): раскладка → us, затем qylock → блокировка Noctalia → hyprlock.
 Если экран блокировки завис: Ctrl+Alt+F3, войти и выполнить
 `pkill -x quickshell; hyprctl --instance 0 dispatch 'hl.dsp.exec_cmd("hyprlock")'`, затем вернуться в Hyprland.
 В `~/.local/share/quickshell-lockscreen/lock_shell.qml` добавлена заглушка `property var keyboard`:
