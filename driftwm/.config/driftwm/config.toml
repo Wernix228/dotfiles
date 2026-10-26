@@ -43,7 +43,11 @@ type = "wallpaper"
 path = "~/dotfiles/wallpapers/catppuccin-mocha.png"
 
 [keybindings]
-"ctrl+alt+t" = "exec-terminal"
+# exec-terminal смотрит $TERMINAL самого driftwm, а [env] выше действует только
+# на запускаемые программы — без явного kitty он пытается запустить foot
+"mod+return" = "exec kitty"
+"ctrl+alt+t" = "exec kitty"
+"mod+d" = "exec fuzzel"
 "alt+shift" = "switch-layout next"
 "mod+e" = "exec dolphin"
 "mod+b" = "exec firefox"
